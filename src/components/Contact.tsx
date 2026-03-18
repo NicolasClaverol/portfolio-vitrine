@@ -28,19 +28,23 @@ export default function Contact() {
     setForm(initialState)
   }
 
+  const inputClass =
+    'w-full rounded border border-[#233554] bg-[#112240] px-3 py-2.5 text-sm text-[#CCD6F6] outline-none placeholder:text-[#8892B0]/40 transition-colors focus:border-[#64FFDA] focus:ring-1 focus:ring-[#64FFDA]/20'
+
   return (
     <section id="contact" className="py-24">
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid gap-12 md:grid-cols-2">
           <div>
-            <h2 className="mb-4 text-3xl font-semibold tracking-tight text-[#1C1C1C]">
+            <p className="mb-2 font-mono text-sm text-[#64FFDA]">04.</p>
+            <h2 className="mb-4 text-3xl font-semibold tracking-tight text-[#CCD6F6]">
               Un projet ? Parlons-en.
             </h2>
-            <p className="mb-8 text-[#6B7280]">Je réponds sous 24h.</p>
+            <p className="mb-8 text-[#8892B0]">Je réponds sous 24h.</p>
 
-            <div className="space-y-4 text-sm text-[#6B7280]">
+            <div className="space-y-4 text-sm text-[#8892B0]">
               <p>
-                📍 Basé à Montpellier — disponible en visio ou en présentiel en Occitanie.
+                Basé à Montpellier, disponible pour vos projets partout en France.
               </p>
             </div>
           </div>
@@ -48,12 +52,12 @@ export default function Contact() {
           <div>
             {sent ? (
               <div className="flex h-full flex-col items-start justify-center">
-                <div className="rounded-xl border border-[#3B5BDB]/20 bg-[#3B5BDB]/5 p-6">
-                  <p className="font-medium text-[#3B5BDB]">Message envoyé !</p>
-                  <p className="mt-1 text-sm text-[#6B7280]">Je vous recontacte rapidement.</p>
+                <div className="rounded border border-[#64FFDA]/20 bg-[#64FFDA]/5 p-6">
+                  <p className="font-medium text-[#64FFDA]">Message envoyé !</p>
+                  <p className="mt-1 text-sm text-[#8892B0]">Je vous recontacte rapidement.</p>
                   <button
                     onClick={() => setSent(false)}
-                    className="mt-4 text-sm underline underline-offset-2 text-[#3B5BDB] hover:text-[#2f4bc4]"
+                    className="mt-4 font-mono text-sm text-[#64FFDA] underline underline-offset-2 hover:no-underline"
                   >
                     Envoyer un autre message
                   </button>
@@ -62,7 +66,7 @@ export default function Contact() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-[#1C1C1C]">
+                  <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-[#CCD6F6]">
                     Nom *
                   </label>
                   <input
@@ -73,12 +77,12 @@ export default function Contact() {
                     value={form.name}
                     onChange={handleChange}
                     placeholder="Marie Dupont"
-                    className="w-full rounded-md border border-[#E5E7EB] bg-white px-3 py-2.5 text-sm text-[#1C1C1C] outline-none placeholder:text-[#9CA3AF] transition-colors focus:border-[#3B5BDB] focus:ring-2 focus:ring-[#3B5BDB]/20"
+                    className={inputClass}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-[#1C1C1C]">
+                  <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-[#CCD6F6]">
                     Email *
                   </label>
                   <input
@@ -89,13 +93,13 @@ export default function Contact() {
                     value={form.email}
                     onChange={handleChange}
                     placeholder="marie@exemple.fr"
-                    className="w-full rounded-md border border-[#E5E7EB] bg-white px-3 py-2.5 text-sm text-[#1C1C1C] outline-none placeholder:text-[#9CA3AF] transition-colors focus:border-[#3B5BDB] focus:ring-2 focus:ring-[#3B5BDB]/20"
+                    className={inputClass}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-[#1C1C1C]">
-                    Téléphone <span className="text-[#9CA3AF] font-normal">(optionnel)</span>
+                  <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-[#CCD6F6]">
+                    Téléphone <span className="text-[#8892B0]/60 font-normal">(optionnel)</span>
                   </label>
                   <input
                     id="phone"
@@ -104,12 +108,12 @@ export default function Contact() {
                     value={form.phone}
                     onChange={handleChange}
                     placeholder="06 12 34 56 78"
-                    className="w-full rounded-md border border-[#E5E7EB] bg-white px-3 py-2.5 text-sm text-[#1C1C1C] outline-none placeholder:text-[#9CA3AF] transition-colors focus:border-[#3B5BDB] focus:ring-2 focus:ring-[#3B5BDB]/20"
+                    className={inputClass}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="mb-1.5 block text-sm font-medium text-[#1C1C1C]">
+                  <label htmlFor="message" className="mb-1.5 block text-sm font-medium text-[#CCD6F6]">
                     Message *
                   </label>
                   <textarea
@@ -120,13 +124,13 @@ export default function Contact() {
                     value={form.message}
                     onChange={handleChange}
                     placeholder="Décrivez votre projet..."
-                    className="w-full resize-none rounded-md border border-[#E5E7EB] bg-white px-3 py-2.5 text-sm text-[#1C1C1C] outline-none placeholder:text-[#9CA3AF] transition-colors focus:border-[#3B5BDB] focus:ring-2 focus:ring-[#3B5BDB]/20"
+                    className={`${inputClass} resize-none`}
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full rounded-md bg-[#3B5BDB] px-6 py-3 text-sm font-medium text-white transition-colors duration-150 hover:bg-[#2f4bc4]"
+                  className="w-full rounded border border-[#64FFDA] px-6 py-3 text-sm font-medium text-[#64FFDA] transition-all duration-150 hover:bg-[#64FFDA]/10"
                 >
                   Envoyer
                 </button>
