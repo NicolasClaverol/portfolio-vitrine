@@ -1,3 +1,5 @@
+import Reveal from './Reveal'
+
 const techs = [
   'PHP',
   'MySQL',
@@ -14,7 +16,8 @@ export default function About() {
     <section id="about" className="bg-[#112240] py-24">
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid gap-12 md:grid-cols-2 md:items-center">
-          <div>
+
+          <Reveal>
             <p className="mb-2 font-mono text-sm text-[#64FFDA]">03.</p>
             <h2 className="mb-6 text-3xl font-semibold tracking-tight text-[#CCD6F6]">
               À propos
@@ -26,9 +29,9 @@ export default function About() {
               et professions libérales dans la création de leur présence en ligne : des sites
               fiables, bien construits, sans superflu.
             </p>
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal delay={150}>
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[#64FFDA]">
               Technologies
             </p>
@@ -42,7 +45,8 @@ export default function About() {
                 </span>
               ))}
             </div>
-          </div>
+          </Reveal>
+
         </div>
       </div>
     </section>

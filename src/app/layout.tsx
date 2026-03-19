@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Loader from "@/components/Loader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -8,11 +9,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Nico Dev — Développeur web freelance Montpellier",
+  title: "Nicolas Claverol — Développeur web freelance Montpellier",
   description:
     "Création de sites web sur mesure à Montpellier pour artisans, commerces et professions libérales.",
   openGraph: {
-    title: "Nico Dev — Développeur web freelance Montpellier",
+    title: "Nicolas Claverol — Développeur web freelance Montpellier",
     description:
       "Création de sites web sur mesure à Montpellier pour artisans, commerces et professions libérales.",
     locale: "fr_FR",
@@ -27,7 +28,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={inter.className}>
-      <body>{children}</body>
+      <body>
+        <Loader />
+        {children}
+      </body>
     </html>
   );
 }

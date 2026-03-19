@@ -21,7 +21,7 @@ export default function Nav() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`hero-item hero-d1 sticky top-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-[#0A192F]/90 backdrop-blur-sm shadow-lg shadow-black/20 border-b border-[#233554]'
           : 'bg-transparent'
@@ -29,7 +29,7 @@ export default function Nav() {
     >
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <a href="#" className="text-sm font-semibold tracking-tight text-[#CCD6F6]">
-          Nico<span className="text-[#64FFDA]">Dev</span>
+          Nicolas Claverol
         </a>
 
         {/* Desktop links */}

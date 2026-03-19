@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
+import Reveal from './Reveal'
 
 type FormState = {
   name: string
@@ -35,7 +36,8 @@ export default function Contact() {
     <section id="contact" className="py-24">
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid gap-12 md:grid-cols-2">
-          <div>
+
+          <Reveal>
             <p className="mb-2 font-mono text-sm text-[#64FFDA]">04.</p>
             <h2 className="mb-4 text-3xl font-semibold tracking-tight text-[#CCD6F6]">
               Un projet ? Parlons-en.
@@ -47,9 +49,9 @@ export default function Contact() {
                 Basé à Montpellier, disponible pour vos projets partout en France.
               </p>
             </div>
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal delay={150}>
             {sent ? (
               <div className="flex h-full flex-col items-start justify-center">
                 <div className="rounded border border-[#64FFDA]/20 bg-[#64FFDA]/5 p-6">
@@ -136,7 +138,8 @@ export default function Contact() {
                 </button>
               </form>
             )}
-          </div>
+          </Reveal>
+
         </div>
       </div>
     </section>
