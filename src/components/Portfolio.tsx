@@ -24,6 +24,7 @@ const projects: Project[] = [
     stack: ['Next.js', 'Tailwind CSS'],
     description:
       'Portfolio visuel minimaliste avec boutique en ligne et gestion des commandes sur mesure.',
+    url: 'https://ceramiques-madore.vercel.app',
   },
   {
     name: 'Cabinet Kiné Antigone',
