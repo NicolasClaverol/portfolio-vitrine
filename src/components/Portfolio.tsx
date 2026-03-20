@@ -29,9 +29,10 @@ const projects: Project[] = [
   {
     name: 'Cabinet Kiné Antigone',
     type: 'Kinésithérapeute libéral — quartier Antigone',
-    stack: ['React', 'PHP', 'MySQL'],
+    stack: ['React', 'Next.js', 'Tailwind', 'TypeScript'],
     description:
       'Site professionnel avec prise de rendez-vous en ligne et présentation des spécialités.',
+    url: 'https://cabinet-kine-antigone.vercel.app',
   },
 ]
 
