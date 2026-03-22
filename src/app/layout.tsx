@@ -12,6 +12,10 @@ export const metadata: Metadata = {
   title: "Nicolas Claverol — Développeur web freelance Montpellier",
   description:
     "Création de sites web sur mesure à Montpellier pour artisans, commerces et professions libérales.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+  },
   openGraph: {
     title: "Nicolas Claverol — Développeur web freelance Montpellier",
     description:
