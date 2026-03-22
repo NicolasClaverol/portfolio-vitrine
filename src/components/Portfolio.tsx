@@ -4,7 +4,6 @@ import Reveal from './Reveal'
 type Project = {
   name: string
   type: string
-  stack: string[]
   description: string
   url?: string
 }
@@ -13,7 +12,6 @@ const projects: Project[] = [
   {
     name: "L'Échoppe du Peyrou",
     type: 'Restaurant / brasserie — Montpellier centre',
-    stack: ['Next.js', 'Tailwind', 'TypeScript'],
     description:
       'Site vitrine avec menu en ligne, galerie photos et formulaire de réservation.',
     url: 'https://echoppe-du-peyrou.vercel.app',
@@ -21,7 +19,6 @@ const projects: Project[] = [
   {
     name: 'Céramiques Madoré',
     type: 'Artisane céramiste — marché des Arceaux',
-    stack: ['Next.js', 'Tailwind CSS'],
     description:
       'Portfolio visuel minimaliste avec boutique en ligne et gestion des commandes sur mesure.',
     url: 'https://ceramiques-madore.vercel.app',
@@ -29,7 +26,6 @@ const projects: Project[] = [
   {
     name: 'Cabinet Kiné Antigone',
     type: 'Kinésithérapeute libéral — quartier Antigone',
-    stack: ['React', 'Next.js', 'Tailwind', 'TypeScript'],
     description:
       'Site professionnel avec prise de rendez-vous en ligne et présentation des spécialités.',
     url: 'https://cabinet-kine-antigone.vercel.app',
@@ -80,13 +76,6 @@ export default function Portfolio() {
                   <p className="mb-4 flex-1 text-sm leading-relaxed text-[#8892B0]">
                     {p.description}
                   </p>
-                  <div className="flex flex-wrap gap-2">
-                    {p.stack.map((tech) => (
-                      <span key={tech} className="font-mono text-xs text-[#64FFDA]">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
                   {p.url && (
                     <a
                       href={p.url}
