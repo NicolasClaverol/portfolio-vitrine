@@ -15,6 +15,8 @@ const initialState: FormState = { name: '', email: '', phone: '', message: '' }
 export default function Contact() {
   const [form, setForm] = useState<FormState>(initialState)
   const [sent, setSent] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -22,11 +24,25 @@ export default function Contact() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    // Placeholder — à connecter à un backend ou un service comme Resend
-    setSent(true)
-    setForm(initialState)
+    setLoading(true)
+    setError(null)
+
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    })
+
+    setLoading(false)
+
+    if (res.ok) {
+      setSent(true)
+      setForm(initialState)
+    } else {
+      setError('Une erreur est survenue. Veuillez réessayer.')
+    }
   }
 
   const inputClass =
@@ -130,11 +146,16 @@ export default function Contact() {
                   />
                 </div>
 
+                {error && (
+                  <p className="text-sm text-red-400">{error}</p>
+                )}
+
                 <button
                   type="submit"
-                  className="w-full rounded border border-[#64FFDA] px-6 py-3 text-sm font-medium text-[#64FFDA] transition-all duration-150 hover:bg-[#64FFDA]/10"
+                  disabled={loading}
+                  className="w-full rounded border border-[#64FFDA] px-6 py-3 text-sm font-medium text-[#64FFDA] transition-all duration-150 hover:bg-[#64FFDA]/10 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Envoyer
+                  {loading ? 'Envoi…' : 'Envoyer'}
                 </button>
               </form>
             )}
