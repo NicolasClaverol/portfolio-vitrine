@@ -33,7 +33,6 @@ const projects: Project[] = [
   {
     name: 'Camille Orsini',
     type: 'Artiste peintre — Lyon',
-    stack: ['Next.js', 'Tailwind', 'TypeScript', 'CMS'],
     description:
       'Site galerie avec vente en ligne des œuvres et gestion autonome du contenu via CMS.',
     url: 'https://camille-orsini.vercel.app',
