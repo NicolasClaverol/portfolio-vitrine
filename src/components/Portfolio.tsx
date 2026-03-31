@@ -30,12 +30,20 @@ const projects: Project[] = [
       'Site professionnel avec prise de rendez-vous en ligne et présentation des spécialités.',
     url: 'https://cabinet-kine-antigone.vercel.app',
   },
+  {
+    name: 'Camille Orsini',
+    type: 'Artiste peintre — Lyon',
+    stack: ['Next.js', 'Tailwind', 'TypeScript', 'CMS'],
+    description:
+      'Site galerie avec vente en ligne des œuvres et gestion autonome du contenu via CMS.',
+    url: 'https://camille-orsini.vercel.app',
+  },
 ]
 
 export default function Portfolio() {
   return (
     <section id="portfolio" className="py-24">
-      <div className="mx-auto max-w-5xl px-6">
+      <div className="mx-auto max-w-7xl px-6">
 
         <Reveal>
           <p className="mb-2 font-mono text-sm text-[#64FFDA]">02.</p>
@@ -47,7 +55,7 @@ export default function Portfolio() {
           </p>
         </Reveal>
 
-        <div className="grid gap-6 sm:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {projects.map((p, i) => (
             <Reveal key={p.name} delay={i * 100}>
               <article className="group flex h-full flex-col overflow-hidden rounded border border-[#233554] bg-[#112240] transition-all duration-200 hover:border-[#64FFDA]/40 hover:-translate-y-1">
