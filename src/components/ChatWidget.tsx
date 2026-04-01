@@ -2,6 +2,17 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 
+const PULSE_STYLES = `
+@keyframes chatPulse {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  100% { transform: scale(1.9); opacity: 0;   }
+}
+@keyframes bubbleFadeIn {
+  from { opacity: 0; transform: translateX(6px); }
+  to   { opacity: 1; transform: translateX(0);   }
+}
+`
+
 interface Message {
   role: 'user' | 'assistant'
   content: string
@@ -18,6 +29,7 @@ export default function ChatWidget() {
   const [messages, setMessages] = useState<Message[]>([WELCOME])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [showBubble, setShowBubble] = useState(false)
   const [showLeadForm, setShowLeadForm] = useState(false)
   const [leadName, setLeadName] = useState('')
   const [leadEmail, setLeadEmail] = useState('')
@@ -34,6 +46,12 @@ export default function ChatWidget() {
   useEffect(() => {
     if (isOpen) inputRef.current?.focus()
   }, [isOpen])
+
+  useEffect(() => {
+    const show = setTimeout(() => setShowBubble(true), 3000)
+    const hide = setTimeout(() => setShowBubble(false), 7000)
+    return () => { clearTimeout(show); clearTimeout(hide) }
+  }, [])
 
   const sendMessage = useCallback(async () => {
     if (!input.trim() || isLoading) return
@@ -422,41 +440,92 @@ export default function ChatWidget() {
       )}
 
       {/* ── Floating button ────────────────────────────────────────── */}
-      <button
-        onClick={() => setIsOpen((o) => !o)}
-        aria-label={isOpen ? 'Fermer le chat' : 'Ouvrir le chat'}
-        style={{
-          width: 56,
-          height: 56,
-          borderRadius: '50%',
-          background: '#112240',
-          border: '2px solid #64FFDA',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 4px 24px rgba(100,255,218,0.2)',
-          transition: 'transform 0.15s ease',
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
-        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-      >
-        {isOpen ? (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M18 6L6 18M6 6l12 12" stroke="#64FFDA" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-        ) : (
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
-              stroke="#64FFDA"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+      <style>{PULSE_STYLES}</style>
+      <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+        {/* Tooltip bubble */}
+        {showBubble && !isOpen && (
+          <div
+            style={{
+              position: 'absolute',
+              right: 68,
+              bottom: 8,
+              background: '#1C3A5E',
+              color: '#fff',
+              borderRadius: 12,
+              padding: '8px 14px',
+              fontSize: 13,
+              whiteSpace: 'nowrap',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.35)',
+              animation: 'bubbleFadeIn 0.3s ease forwards',
+            }}
+          >
+            Une question ? 👋
+          </div>
         )}
-      </button>
+
+        {/* Pulse rings */}
+        {!isOpen && (
+          <>
+            <div
+              style={{
+                position: 'absolute',
+                inset: -8,
+                borderRadius: '50%',
+                border: '2px solid #64FFDA',
+                animation: 'chatPulse 2.5s ease-out infinite',
+                pointerEvents: 'none',
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                inset: -8,
+                borderRadius: '50%',
+                border: '2px solid #64FFDA',
+                animation: 'chatPulse 2.5s ease-out infinite 1.25s',
+                pointerEvents: 'none',
+              }}
+            />
+          </>
+        )}
+
+        <button
+          onClick={() => setIsOpen((o) => !o)}
+          aria-label={isOpen ? 'Fermer le chat' : 'Ouvrir le chat'}
+          style={{
+            width: 56,
+            height: 56,
+            borderRadius: '50%',
+            background: '#112240',
+            border: '2px solid #64FFDA',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 24px rgba(100,255,218,0.2)',
+            transition: 'transform 0.15s ease',
+            position: 'relative',
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+          onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+        >
+          {isOpen ? (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6l12 12" stroke="#64FFDA" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          ) : (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
+                stroke="#64FFDA"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          )}
+        </button>
+      </div>
     </div>
   )
 }
