@@ -20,7 +20,7 @@ const services = [
     icon: '🤖',
     title: 'Site Pro + Assistant automatique',
     description:
-      'Site multi-pages professionnel + assistant IA qui répond à vos clients 24h/24, 7j/7. Récap des conversations reçu par email.',
+      'Site multi-pages professionnel + assistant IA qui répond à vos clients 24h/24, 7j/7. Récap des conversations reçu par email. 1ère année d\'assistant incluse.',
     price: 'À partir de 1 300 €',
     featured: true,
   },
@@ -36,7 +36,7 @@ const services = [
     icon: '💬',
     title: 'Assistant sur votre site actuel',
     description:
-      'Ajoutez un assistant automatique à votre site existant. Installation rapide, aucune refonte nécessaire.',
+      'Ajoutez un assistant automatique à votre site existant. Installation rapide, aucune refonte nécessaire. Maintenance incluse la 1ère année.',
     price: 'À partir de 800 €',
     featured: false,
   },
