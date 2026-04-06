@@ -9,16 +9,24 @@ const inter = Inter({
   display: "swap",
 });
 
+const description =
+  "Développeur web freelance à Montpellier — sites vitrine, e-commerce et assistants IA pour artisans et indépendants. Devis gratuit en 24h.";
+
 export const metadata: Metadata = {
   title: "Nicolas Claverol — Développeur web freelance Montpellier",
-  description:
-    "Création de sites web sur mesure à Montpellier pour artisans, commerces et professions libérales.",
+  description,
   openGraph: {
     title: "Nicolas Claverol — Développeur web freelance Montpellier",
-    description:
-      "Création de sites web sur mesure à Montpellier pour artisans, commerces et professions libérales.",
+    description,
+    url: "https://www.nicolasclaverol.com",
+    siteName: "Nicolas Claverol",
     locale: "fr_FR",
     type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+      },
+    ],
   },
 };
 

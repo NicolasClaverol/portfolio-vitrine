@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Flyer — Nicolas Claverol, Développeur web freelance</title>
+  <style>
+    @page { size: 148mm 210mm; margin: 0; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 148mm;
+      height: 210mm;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: #0D1F3C;
+      color: #ffffff;
+    }
+
+    /* ─── TABLEAU PRINCIPAL ─── */
+    .t-main {
+      width: 148mm;
+      height: 210mm;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    /* ─── HEADER ─── */
+    .td-header {
+      background: #1C3A5E;
+      padding: 10px 14px 9px;
+      height: 20mm;
+      vertical-align: top;
+    }
+    .h-name {
+      font-size: 16pt;
+      font-weight: bold;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+    .h-sub {
+      font-size: 9pt;
+      color: #64FFDA;
+      margin-top: 2px;
+      line-height: 1.2;
+    }
+    .h-accroche {
+      font-size: 7.5pt;
+      color: #a8b8cc;
+      font-style: italic;
+      margin-top: 5px;
+      line-height: 1.35;
+    }
+
+    /* ─── CONTENU ─── */
+    .td-content {
+      background: #0D1F3C;
+      padding: 7px;
+      vertical-align: top;
+    }
+
+    /* ─── TABLEAU DE CARTES ─── */
+    .t-cards {
+      width: 100%;
+      height: 100%;
+      border-collapse: separate;
+      border-spacing: 6px;
+      table-layout: fixed;
+    }
+
+    /* Cellule carte standard */
+    .td-card {
+      background: #112240;
+      border: 1px solid #1E3A5F;
+      border-radius: 6px;
+      padding: 9px 10px 8px;
+      vertical-align: top;
+      width: 50%;
+    }
+
+    /* Cellule offre phare */
+    .td-phare {
+      background: #0C2040;
+      border: 1.5px solid #64FFDA;
+      border-radius: 6px;
+      padding: 9px 10px 8px;
+      vertical-align: top;
+    }
+
+    /* ─── CONTENU CARTE ─── */
+    .c-accent {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: #64FFDA;
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-right: 5px;
+      margin-bottom: 2px;
+    }
+    .c-title {
+      font-size: 8.5pt;
+      font-weight: bold;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+    .c-desc {
+      font-size: 7pt;
+      color: #8892B0;
+      line-height: 1.4;
+      margin-bottom: 5px;
+    }
+    .c-price {
+      font-size: 9pt;
+      font-weight: bold;
+      color: #64FFDA;
+    }
+
+    /* ─── OFFRE PHARE SPÉCIFIQUE ─── */
+    .c-badge {
+      display: inline-block;
+      background: #64FFDA;
+      color: #0D1F3C;
+      font-size: 5.5pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 6px;
+      border-radius: 2px;
+      margin-bottom: 5px;
+    }
+    .t-phare-inner {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .td-phare-left {
+      vertical-align: top;
+      padding-right: 8px;
+    }
+    .td-phare-right {
+      vertical-align: middle;
+      text-align: right;
+      width: 62px;
+      white-space: nowrap;
+    }
+    .phare-price {
+      font-size: 13pt;
+      font-weight: bold;
+      color: #64FFDA;
+      line-height: 1.1;
+    }
+    .phare-price-label {
+      font-size: 6pt;
+      color: #8892B0;
+      margin-top: 1px;
+    }
+    .t-features {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 4px;
+    }
+    .td-feat {
+      font-size: 6.8pt;
+      color: #a8c4d8;
+      line-height: 1.35;
+      padding: 1px 4px 1px 0;
+      vertical-align: top;
+    }
+    .feat-dot {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      background: #64FFDA;
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 3px;
+      margin-bottom: 1px;
+    }
+
+    /* ─── FOOTER ─── */
+    .td-footer {
+      background: #1C3A5E;
+      padding: 8px 14px;
+      height: 14mm;
+      vertical-align: middle;
+    }
+    .t-footer {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .td-footer-cta {
+      font-size: 9pt;
+      font-weight: bold;
+      color: #64FFDA;
+      line-height: 1.35;
+      vertical-align: middle;
+    }
+    .td-footer-sep {
+      width: 1px;
+      padding: 0 8px;
+      vertical-align: middle;
+    }
+    .footer-sep-line {
+      width: 1px;
+      height: 18px;
+      background: rgba(100,255,218,0.3);
+      display: inline-block;
+    }
+    .td-footer-contact {
+      font-size: 7pt;
+      color: #a8b8cc;
+      line-height: 1.55;
+      text-align: right;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+<table class="t-main">
+
+  <!-- ══ HEADER ══ -->
+  <tr>
+    <td class="td-header">
+      <div class="h-name">Nicolas Claverol</div>
+      <div class="h-sub">Développeur web freelance · Montpellier</div>
+      <div class="h-accroche">Des sites clairs, rapides et efficaces — pour les artisans, commerçants et professions libérales.</div>
+    </td>
+  </tr>
+
+  <!-- ══ CONTENU ══ -->
+  <tr>
+    <td class="td-content">
+      <table class="t-cards">
+
+        <!-- Rangée 1 : cartes 1 & 2 -->
+        <tr>
+          <td class="td-card">
+            <div class="c-title"><span class="c-accent"></span>Site vitrine Essentiel</div>
+            <div class="c-desc">Site soigné, design sur mesure, visible sur Google.</div>
+            <div class="c-price">À partir de 900 €</div>
+          </td>
+          <td class="td-card">
+            <div class="c-title"><span class="c-accent"></span>Site Pro + Gestion autonome</div>
+            <div class="c-desc">Modifiez textes et photos vous-même, sans technicien.</div>
+            <div class="c-price">À partir de 1 200 €</div>
+          </td>
+        </tr>
+
+        <!-- Rangée 2 : carte 3 OFFRE PHARE (colspan 2) -->
+        <tr>
+          <td colspan="2" class="td-phare">
+            <div class="c-badge">&#9733; Offre phare</div>
+            <table class="t-phare-inner">
+              <tr>
+                <td class="td-phare-left">
+                  <div class="c-title" style="margin-bottom:3px;">Site Pro + Assistant automatique</div>
+                  <div class="c-desc" style="margin-bottom:3px;">Site multi-pages + assistant IA 24h/24, récap email chaque matin, 1ère année d'assistant offerte.</div>
+                  <table class="t-features">
+                    <tr>
+                      <td class="td-feat"><span class="feat-dot"></span>Site web multi-pages pro</td>
+                      <td class="td-feat"><span class="feat-dot"></span>Récap email chaque matin</td>
+                    </tr>
+                    <tr>
+                      <td class="td-feat"><span class="feat-dot"></span>Assistant IA 24h/24, 7j/7</td>
+                      <td class="td-feat"><span class="feat-dot"></span>1ère année d'assistant offerte</td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="td-phare-right">
+                  <div class="phare-price">1 300 €</div>
+                  <div class="phare-price-label">tout compris</div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Rangée 3 : cartes 4 & 5 -->
+        <tr>
+          <td class="td-card">
+            <div class="c-title"><span class="c-accent"></span>Site e-commerce</div>
+            <div class="c-desc">Boutique en ligne complète, paiement sécurisé, gestion des stocks.</div>
+            <div class="c-price">À partir de 1 800 €</div>
+          </td>
+          <td class="td-card">
+            <div class="c-title"><span class="c-accent"></span>Assistant sur votre site actuel</div>
+            <div class="c-desc">Ajoutez un assistant à votre site existant, sans refonte.</div>
+            <div class="c-price">À partir de 800 €</div>
+          </td>
+        </tr>
+
+        <!-- Rangée 4 : carte 6 (colspan 2) -->
+        <tr>
+          <td colspan="2" class="td-card">
+            <div class="c-title"><span class="c-accent"></span>Refonte &amp; maintenance</div>
+            <div class="c-desc">Modernisation, mises à jour, support technique continu.</div>
+            <div class="c-price">Sur devis</div>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+
+  <!-- ══ FOOTER ══ -->
+  <tr>
+    <td class="td-footer">
+      <table class="t-footer">
+        <tr>
+          <td class="td-footer-cta">Devis gratuit en 24h<br>sans engagement</td>
+          <td class="td-footer-sep"><span class="footer-sep-line"></span></td>
+          <td class="td-footer-contact">
+            contact@nicolasclaverol.com<br>
+            nicolasclaverol.com<br>
+            Montpellier &amp; alentours
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+</table>
+</body>
+</html>
