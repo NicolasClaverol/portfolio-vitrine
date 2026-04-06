@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Loader from "@/components/Loader"
 import ChatWidget from "@/components/ChatWidget";
 
 const inter = Inter({
@@ -38,7 +37,6 @@ export default function RootLayout({
   return (
     <html lang="fr" className={inter.className}>
       <body>
-        <Loader />
         {children}
         <ChatWidget />
       </body>
