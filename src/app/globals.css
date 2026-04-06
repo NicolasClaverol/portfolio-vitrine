@@ -22,22 +22,17 @@
   }
 }
 
-/*
-  Hero — éléments animés au chargement.
-  Le Loader disparaît à ~3 s ; les délais sont calés sur cet instant.
-*/
+/* Hero — stagger d'entrée immédiat au chargement */
 .hero-item {
   opacity: 0;
-  /* "both" : applique l'état "from" (opacity:0) immédiatement,
-     avant même que le délai soit écoulé → pas de flash visible */
   animation: fade-up 400ms cubic-bezier(0.65, 0, 0.35, 1) both;
 }
-.hero-d1 { animation-delay: 2.80s; }
-.hero-d2 { animation-delay: 2.95s; }
-.hero-d3 { animation-delay: 3.10s; }
-.hero-d4 { animation-delay: 3.25s; }
-.hero-d5 { animation-delay: 3.40s; }
-.hero-d6 { animation-delay: 3.55s; }
+.hero-d1 { animation-delay:   0ms; }
+.hero-d2 { animation-delay:  80ms; }
+.hero-d3 { animation-delay: 160ms; }
+.hero-d4 { animation-delay: 240ms; }
+.hero-d5 { animation-delay: 320ms; }
+.hero-d6 { animation-delay: 400ms; }
 
 /* Sections — animées à l'entrée dans le viewport via IntersectionObserver */
 .reveal {

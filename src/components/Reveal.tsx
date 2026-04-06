@@ -18,7 +18,6 @@ export default function Reveal({ children, delay = 0, className = '' }: RevealPr
     // Si déjà visible au montage (ex. sections en haut de page), déclenche immédiatement
     const rect = el.getBoundingClientRect()
     if (rect.top < window.innerHeight) {
-      console.log('[Reveal] déjà visible au montage, delay=', delay)
       setTimeout(() => el.classList.add('in-view'), delay)
       return
     }
@@ -26,7 +25,6 @@ export default function Reveal({ children, delay = 0, className = '' }: RevealPr
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          console.log('[Reveal] in-view déclenché, delay=', delay, el)
           setTimeout(() => el.classList.add('in-view'), delay)
           observer.disconnect()
         }
