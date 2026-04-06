@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import ChatWidget from "@/components/ChatWidget";
 
@@ -63,6 +64,7 @@ export default function RootLayout({
       <body>
         {children}
         <ChatWidget />
+        <GoogleAnalytics gaId="G-4J71765SZW" />
       </body>
     </html>
   );
