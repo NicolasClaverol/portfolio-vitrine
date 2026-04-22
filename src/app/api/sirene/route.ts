@@ -11,7 +11,7 @@ export async function OPTIONS() {
 }
 
 async function getAccessToken(clientCredentials: string): Promise<string> {
-  const tokenResponse = await fetch('https://portail-api.insee.fr/token', {
+  const tokenResponse = await fetch('https://api.insee.fr/token', {
     method: 'POST',
     headers: {
       Authorization: `Basic ${Buffer.from(clientCredentials).toString('base64')}`,
@@ -21,6 +21,8 @@ async function getAccessToken(clientCredentials: string): Promise<string> {
   });
 
   if (!tokenResponse.ok) {
+    const body = await tokenResponse.text();
+    console.error(`[sirene] OAuth2 token failed: ${tokenResponse.status}`, body);
     throw new Error(`OAuth2 token request failed: ${tokenResponse.status}`);
   }
 
