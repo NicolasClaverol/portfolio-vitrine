@@ -10,12 +10,40 @@ export async function OPTIONS() {
   return new NextResponse(null, { status: 204, headers: CORS_HEADERS });
 }
 
+async function getAccessToken(clientCredentials: string): Promise<string> {
+  const tokenResponse = await fetch('https://portail-api.insee.fr/token', {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${Buffer.from(clientCredentials).toString('base64')}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: 'grant_type=client_credentials',
+  });
+
+  if (!tokenResponse.ok) {
+    throw new Error(`OAuth2 token request failed: ${tokenResponse.status}`);
+  }
+
+  const { access_token } = await tokenResponse.json();
+  return access_token;
+}
+
 export async function GET(request: NextRequest) {
-  const token = process.env.INSEE_TOKEN;
-  if (!token) {
+  const inseeToken = process.env.INSEE_TOKEN;
+  if (!inseeToken) {
     return NextResponse.json(
       { error: 'INSEE_TOKEN not configured' },
       { status: 500, headers: CORS_HEADERS }
+    );
+  }
+
+  let accessToken: string;
+  try {
+    accessToken = await getAccessToken(inseeToken);
+  } catch (err) {
+    return NextResponse.json(
+      { error: (err as Error).message },
+      { status: 502, headers: CORS_HEADERS }
     );
   }
 
@@ -34,7 +62,7 @@ export async function GET(request: NextRequest) {
 
   const response = await fetch(url, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${accessToken}`,
       Accept: 'application/json',
     },
   });
