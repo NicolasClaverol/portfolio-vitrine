@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     q += ` AND dateCreationEtablissement:[${dateMin} TO *]`;
   }
 
-  const params = new URLSearchParams({ q, tri: 'dateCreationEtablissement+desc' });
+  const params = new URLSearchParams({ q, tri: 'dateCreationEtablissement desc' });
   if (nombre) params.set('nombre', nombre);
   if (debut)  params.set('debut', debut);
 
