@@ -34,12 +34,12 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  let q = `activitePrincipaleEtablissement:${naf} AND etatAdministratifEtablissement:A AND codePostalEtablissement:${departement}*`;
+  let q = `periode(activitePrincipaleEtablissement:${naf} AND etatAdministratifEtablissement:A) AND codePostalEtablissement:${departement}*`;
   if (dateMin) {
     q += ` AND dateCreationEtablissement:[${dateMin} TO *]`;
   }
 
-  const params = new URLSearchParams({ q });
+  const params = new URLSearchParams({ q, tri: 'dateCreationEtablissement+desc' });
   if (nombre) params.set('nombre', nombre);
   if (debut)  params.set('debut', debut);
 
