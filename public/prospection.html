@@ -732,39 +732,28 @@ function selectSector(sector) {
 /* ═══════════════════════════════════════════════════════
    REQUÊTE
 ═══════════════════════════════════════════════════════ */
-function buildQuery(naf, dept, dateFrom) {
-  const d = dept.trim();
-
-  let q = `activitePrincipaleEtablissement:"${naf}" AND departementEtablissement:${d} AND etatAdministratifEtablissement:A`;
-
-  if (dateFrom) {
-    q += ` AND dateCreationEtablissement:[${dateFrom} TO *]`;
-  }
-
-  return q;
-}
-
 async function search(debut = 0) {
   if (!state.activeSector) return;
 
-  const dept   = document.getElementById('filterDept').value.trim() || '34';
-  const dateFrom = document.getElementById('filterDate').value;
-  const nombre = parseInt(document.getElementById('filterNombre').value, 10);
-
-  const q = buildQuery(state.activeSector.naf, dept, dateFrom);
+  const dept    = document.getElementById('filterDept').value.trim() || '34';
+  const dateMin = document.getElementById('filterDate').value;
+  const nombre  = parseInt(document.getElementById('filterNombre').value, 10);
 
   state.debut = debut;
 
   showLoading();
-  document.getElementById('queryText').textContent = q;
+  const previewQ = `activitePrincipaleEtablissement:${state.activeSector.naf} AND etatAdministratifEtablissement:A AND codePostalEtablissement:${dept}*${dateMin ? ` AND dateCreationEtablissement:[${dateMin} TO *]` : ''}`;
+  document.getElementById('queryText').textContent = previewQ;
   document.getElementById('queryHint').style.display = 'block';
 
   try {
     const params = new URLSearchParams({
-      q,
-      nombre: String(nombre),
-      debut:  String(debut),
+      naf:         state.activeSector.naf,
+      departement: dept,
+      nombre:      String(nombre),
+      debut:       String(debut),
     });
+    if (dateMin) params.set('dateMin', dateMin);
 
     const res = await fetch(`/api/sirene?${params}`);
     const data = await res.json();

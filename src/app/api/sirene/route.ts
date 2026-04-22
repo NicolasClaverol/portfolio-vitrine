@@ -20,15 +20,28 @@ export async function GET(request: NextRequest) {
   }
 
   const { searchParams } = request.nextUrl;
-  const params = new URLSearchParams();
 
-  const q = searchParams.get('q');
-  const nombre = searchParams.get('nombre');
-  const debut = searchParams.get('debut');
+  const naf        = searchParams.get('naf');
+  const departement = searchParams.get('departement');
+  const dateMin    = searchParams.get('dateMin');
+  const nombre     = searchParams.get('nombre');
+  const debut      = searchParams.get('debut');
 
-  if (q) params.set('q', q);
+  if (!naf || !departement) {
+    return NextResponse.json(
+      { error: 'Paramètres naf et departement requis' },
+      { status: 400, headers: CORS_HEADERS }
+    );
+  }
+
+  let q = `activitePrincipaleEtablissement:${naf} AND etatAdministratifEtablissement:A AND codePostalEtablissement:${departement}*`;
+  if (dateMin) {
+    q += ` AND dateCreationEtablissement:[${dateMin} TO *]`;
+  }
+
+  const params = new URLSearchParams({ q });
   if (nombre) params.set('nombre', nombre);
-  if (debut) params.set('debut', debut);
+  if (debut)  params.set('debut', debut);
 
   const url = `https://api.insee.fr/api-sirene/3.11/siret?${params.toString()}`;
 
