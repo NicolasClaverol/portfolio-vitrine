@@ -733,11 +733,9 @@ function selectSector(sector) {
    REQUÊTE
 ═══════════════════════════════════════════════════════ */
 function buildQuery(naf, dept, dateFrom) {
-  const d = dept.trim().padStart(2, '0');
-  const minCP = d + '000';
-  const maxCP = d + '999';
+  const d = dept.trim();
 
-  let q = `activitePrincipaleEtablissement:"${naf}" AND codePostalEtablissement:[${minCP} TO ${maxCP}] AND etatAdministratifEtablissement:A`;
+  let q = `activitePrincipaleEtablissement:"${naf}" AND departementEtablissement:${d} AND etatAdministratifEtablissement:A`;
 
   if (dateFrom) {
     q += ` AND dateCreationEtablissement:[${dateFrom} TO *]`;
