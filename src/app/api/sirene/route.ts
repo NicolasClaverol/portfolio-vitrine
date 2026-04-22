@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
   if (nombre) params.set('nombre', nombre);
   if (debut) params.set('debut', debut);
 
-  const url = `https://api.insee.fr/api-sirene/3.11/siret?${params.toString()}`;
+  const url = `https://api.insee.fr/entreprises/sirene/V3/siret?${params.toString()}`;
 
   const response = await fetch(url, {
     headers: {
@@ -68,6 +68,10 @@ export async function GET(request: NextRequest) {
   });
 
   const data = await response.json();
+
+  if (!response.ok) {
+    console.error(`[sirene] ${response.status} ${url}`, JSON.stringify(data));
+  }
 
   return NextResponse.json(data, {
     status: response.status,
