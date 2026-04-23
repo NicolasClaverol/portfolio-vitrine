@@ -841,9 +841,7 @@ function toggleSector(sector) {
   document.querySelectorAll('.sector-btn').forEach(b =>
     b.classList.toggle('active', state.activeSectors.has(b.dataset.id))
   );
-  const empty = state.activeSectors.size === 0;
-  document.getElementById('btnSearch').disabled = empty;
-  if (!empty) search(0);
+  document.getElementById('btnSearch').disabled = state.activeSectors.size === 0;
 }
 
 /* ═══════════════════════════════════════════════════════
