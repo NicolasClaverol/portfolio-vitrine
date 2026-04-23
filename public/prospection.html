@@ -872,7 +872,7 @@ async function search(debut = 0) {
   document.getElementById('queryHint').style.display = 'block';
 
   try {
-    const responses = await Promise.all(sectors.map(sector => {
+    const fetchSector = sector => {
       const params = new URLSearchParams({
         naf:         sector.naf,
         departement: dept,
@@ -883,7 +883,14 @@ async function search(debut = 0) {
       if (dateMax) params.set('dateMax', dateMax);
       return fetch(`/api/sirene?${params}`)
         .then(r => r.json().then(data => ({ ok: r.ok, status: r.status, data })));
-    }));
+    };
+
+    const responses = [];
+    for (let i = 0; i < sectors.length; i += 3) {
+      if (i > 0) await new Promise(resolve => setTimeout(resolve, 500));
+      const batch = await Promise.all(sectors.slice(i, i + 3).map(fetchSector));
+      responses.push(...batch);
+    }
 
     for (const { ok, status, data } of responses) {
       if (!ok) {
