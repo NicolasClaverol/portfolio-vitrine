@@ -59,6 +59,13 @@ export async function GET(request: NextRequest) {
 
   const data = await response.json();
 
+  if (response.status === 404) {
+    return NextResponse.json(
+      { header: { statut: 200, total: 0 }, etablissements: [] },
+      { status: 200, headers: CORS_HEADERS }
+    );
+  }
+
   if (!response.ok) {
     console.error(`[sirene] ${response.status} ${url}`, JSON.stringify(data));
   }
