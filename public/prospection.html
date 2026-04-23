@@ -658,6 +658,86 @@
       transform: translateY(-1px);
       box-shadow: 0 4px 16px rgba(100,255,218,0.28);
     }
+
+    /* ─── MODAL DÉPART ────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,20,35,0.75);
+      backdrop-filter: blur(3px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+    }
+
+    .modal-overlay.hidden { display: none; }
+
+    .modal-box {
+      background: var(--navy);
+      border: 1px solid var(--mint-border);
+      border-radius: 12px;
+      padding: 28px 28px 24px;
+      width: 380px;
+      max-width: calc(100vw - 48px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+
+    .modal-box h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .modal-box p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .modal-box .filter-input {
+      width: 100%;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .btn-modal-cancel {
+      background: transparent;
+      border: 1px solid var(--mint-border);
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      padding: 7px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.14s;
+    }
+
+    .btn-modal-cancel:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+    .btn-modal-confirm {
+      background: var(--mint);
+      color: var(--navy-dark);
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 7px 18px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.14s;
+    }
+
+    .btn-modal-confirm:hover { opacity: 0.88; }
   </style>
 </head>
 <body>
@@ -679,6 +759,20 @@
     Établissements actifs · France métropolitaine
   </div>
 </aside>
+
+<!-- ╔══════════ MODAL DÉPART TOURNÉE ══════════╗ -->
+<div class="modal-overlay hidden" id="tourModal" onclick="if(event.target===this)closeTourModal()">
+  <div class="modal-box">
+    <h3>🗺️ Point de départ</h3>
+    <p>Saisissez l'adresse depuis laquelle vous partez. Elle sera insérée en tête de l'itinéraire Google Maps.</p>
+    <input type="text" id="tourStart" class="filter-input" value="Montpellier, France"
+           placeholder="ex : 10 rue de la Paix, Paris">
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeTourModal()">Annuler</button>
+      <button class="btn-modal-confirm" onclick="confirmTourModal()">Ouvrir Maps →</button>
+    </div>
+  </div>
+</div>
 
 <!-- ╔══════════ MAIN ══════════╗ -->
 <main class="main">
@@ -1196,10 +1290,26 @@ function updateTourBar() {
 }
 
 function openGoogleMapsTour() {
+  if (state.tourSelected.size < 2) return;
+  const modal = document.getElementById('tourModal');
+  modal.classList.remove('hidden');
+  const input = document.getElementById('tourStart');
+  input.focus();
+  input.select();
+  input.onkeydown = e => { if (e.key === 'Enter') confirmTourModal(); if (e.key === 'Escape') closeTourModal(); };
+}
+
+function closeTourModal() {
+  document.getElementById('tourModal').classList.add('hidden');
+}
+
+function confirmTourModal() {
+  const start = document.getElementById('tourStart').value.trim();
   const addresses = Array.from(state.tourSelected.values()).filter(Boolean);
-  if (addresses.length < 2) return;
-  const path = addresses.map(a => encodeURIComponent(a)).join('/');
+  const all = start ? [start, ...addresses] : addresses;
+  const path = all.map(a => encodeURIComponent(a)).join('/');
   window.open(`https://www.google.com/maps/dir/${path}`, '_blank');
+  closeTourModal();
 }
 
 /* ═══════════════════════════════════════════════════════
