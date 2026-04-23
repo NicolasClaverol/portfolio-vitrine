@@ -570,6 +570,94 @@
       display: block;
       margin-bottom: 4px;
     }
+
+    /* ─── FILTERS BAR WRAP ────────────────────────────── */
+    .filters-bar {
+      height: auto !important;
+      min-height: var(--filters-h);
+      padding: 10px 24px !important;
+      flex-wrap: wrap !important;
+      row-gap: 8px;
+    }
+
+    /* ─── CARD SELECTION TOURNÉE ──────────────────────── */
+    .card-name { padding-right: 28px; }
+
+    .card-select-label {
+      position: absolute;
+      top: 11px; right: 12px;
+      cursor: pointer;
+      z-index: 2;
+      line-height: 0;
+    }
+
+    .card-select-label input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      width: 0; height: 0;
+    }
+
+    .card-select-check {
+      display: block;
+      width: 18px; height: 18px;
+      border: 1.5px solid rgba(100,255,218,0.28);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.04);
+      transition: all 0.14s;
+      position: relative;
+    }
+
+    .card-select-label:hover .card-select-check {
+      border-color: var(--mint);
+      background: var(--mint-glow);
+    }
+
+    .card-select-label input:checked ~ .card-select-check {
+      background: var(--mint);
+      border-color: var(--mint);
+    }
+
+    .card-select-check::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 5px;
+      width: 5px; height: 9px;
+      border: 2px solid var(--navy-dark);
+      border-top: none; border-left: none;
+      transform: rotate(45deg);
+      opacity: 0;
+      transition: opacity 0.1s;
+    }
+
+    .card-select-label input:checked ~ .card-select-check::after { opacity: 1; }
+
+    .card.selected {
+      border-color: rgba(100,255,218,0.45) !important;
+      background: rgba(100,255,218,0.055) !important;
+    }
+
+    .btn-tour {
+      background: var(--mint);
+      color: var(--navy-dark);
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 15px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.14s, transform 0.1s, box-shadow 0.14s;
+      white-space: nowrap;
+    }
+
+    .btn-tour:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(100,255,218,0.28);
+    }
   </style>
 </head>
 <body>
@@ -615,6 +703,13 @@
     <div class="filter-sep"></div>
 
     <div class="filter-group">
+      <label>Créé jusqu'au</label>
+      <input type="date" id="filterDateMax" class="filter-input" style="width:150px">
+    </div>
+
+    <div class="filter-sep"></div>
+
+    <div class="filter-group">
       <label>Résultats</label>
       <select id="filterNombre" class="filter-input" style="width:90px">
         <option value="20">20</option>
@@ -642,6 +737,9 @@
         <p id="resultsSub"></p>
       </div>
       <div class="results-actions">
+        <button class="btn-export" id="btnSelectAll" onclick="selectAll()">☑ Tout sélect.</button>
+        <button class="btn-export" id="btnDeselectAll" onclick="deselectAll()">☐ Tout déséléct.</button>
+        <button class="btn-tour" id="btnTour" onclick="openGoogleMapsTour()"></button>
         <button class="btn-export" id="btnExport" onclick="exportCSV()" disabled>
           ↓ Exporter CSV
         </button>
@@ -711,6 +809,8 @@ let state = {
   results: [],
   total: 0,
   debut: 0,
+  tourSelected: new Map(),
+  etabAddresses: {},
 };
 
 /* ═══════════════════════════════════════════════════════
@@ -749,12 +849,17 @@ async function search(debut = 0) {
 
   const dept    = document.getElementById('filterDept').value.trim() || '34';
   const dateMin = document.getElementById('filterDate').value;
+  const dateMax = document.getElementById('filterDateMax').value;
   const nombre  = parseInt(document.getElementById('filterNombre').value, 10);
 
   state.debut = debut;
 
   showLoading();
-  const previewQ = `activitePrincipaleEtablissement:${state.activeSector.naf} AND etatAdministratifEtablissement:A AND codePostalEtablissement:${dept}*${dateMin ? ` AND dateCreationEtablissement:[${dateMin} TO *]` : ''}`;
+  const dateRange = dateMin && dateMax ? `[${dateMin} TO ${dateMax}]`
+                  : dateMin ? `[${dateMin} TO *]`
+                  : dateMax ? `[* TO ${dateMax}]`
+                  : null;
+  const previewQ = `activitePrincipaleEtablissement:${state.activeSector.naf} AND etatAdministratifEtablissement:A AND codePostalEtablissement:${dept}*${dateRange ? ` AND dateCreationEtablissement:${dateRange}` : ''}`;
   document.getElementById('queryText').textContent = previewQ;
   document.getElementById('queryHint').style.display = 'block';
 
@@ -766,6 +871,7 @@ async function search(debut = 0) {
       debut:       String(debut),
     });
     if (dateMin) params.set('dateMin', dateMin);
+    if (dateMax) params.set('dateMax', dateMax);
 
     const res = await fetch(`/api/sirene?${params}`);
     const data = await res.json();
@@ -868,6 +974,10 @@ function renderResults(dept, nombre) {
     return;
   }
 
+  state.tourSelected = new Map();
+  state.etabAddresses = {};
+  updateTourBar();
+
   const fragment = document.createDocumentFragment();
 
   results.forEach(etab => {
@@ -876,13 +986,21 @@ function renderResults(dept, nombre) {
     const naf   = getCurrentNaf(etab);
     const staff = getStaff(etab);
     const date  = fmtDate(etab.dateCreationEtablissement);
+    const siret = etab.siret || '';
+
+    const fullAddress = [addr.street, addr.city].filter(Boolean).join(', ');
+    state.etabAddresses[siret] = fullAddress;
 
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
       <div class="card-accent"></div>
+      <label class="card-select-label">
+        <input type="checkbox" class="card-checkbox" data-siret="${esc(siret)}" onchange="toggleTourCard(this)">
+        <span class="card-select-check"></span>
+      </label>
       <div class="card-name">${esc(name)}</div>
-      <div class="card-siret">SIRET&thinsp;${esc(fmtSiret(etab.siret))}</div>
+      <div class="card-siret">SIRET&thinsp;${esc(fmtSiret(siret))}</div>
       <div class="card-address">
         ${addr.street ? esc(addr.street) + '<br>' : ''}${esc(addr.city)}
       </div>
@@ -991,6 +1109,57 @@ function exportCSV() {
   a.download = `prospection_${state.activeSector.id}_dept${dept}.csv`;
   a.click();
   URL.revokeObjectURL(url);
+}
+
+/* ═══════════════════════════════════════════════════════
+   TOURNÉE
+═══════════════════════════════════════════════════════ */
+function toggleTourCard(cb) {
+  const siret = cb.dataset.siret;
+  if (cb.checked) {
+    state.tourSelected.set(siret, state.etabAddresses[siret] || '');
+  } else {
+    state.tourSelected.delete(siret);
+  }
+  cb.closest('.card').classList.toggle('selected', cb.checked);
+  updateTourBar();
+}
+
+function selectAll() {
+  document.querySelectorAll('.card-checkbox').forEach(cb => {
+    cb.checked = true;
+    state.tourSelected.set(cb.dataset.siret, state.etabAddresses[cb.dataset.siret] || '');
+    cb.closest('.card').classList.add('selected');
+  });
+  updateTourBar();
+}
+
+function deselectAll() {
+  document.querySelectorAll('.card-checkbox').forEach(cb => {
+    cb.checked = false;
+    cb.closest('.card').classList.remove('selected');
+  });
+  state.tourSelected.clear();
+  updateTourBar();
+}
+
+function updateTourBar() {
+  const count = state.tourSelected.size;
+  const btn = document.getElementById('btnTour');
+  if (!btn) return;
+  if (count >= 2) {
+    btn.style.display = 'flex';
+    btn.textContent = `🗺️ Planifier ma tournée (${count} adresse${count > 1 ? 's' : ''})`;
+  } else {
+    btn.style.display = 'none';
+  }
+}
+
+function openGoogleMapsTour() {
+  const addresses = Array.from(state.tourSelected.values()).filter(Boolean);
+  if (addresses.length < 2) return;
+  const path = addresses.map(a => encodeURIComponent(a)).join('/');
+  window.open(`https://www.google.com/maps/dir/${path}`, '_blank');
 }
 
 /* ═══════════════════════════════════════════════════════

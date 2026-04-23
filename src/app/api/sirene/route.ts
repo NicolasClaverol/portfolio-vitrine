@@ -24,6 +24,7 @@ export async function GET(request: NextRequest) {
   const naf        = searchParams.get('naf');
   const departement = searchParams.get('departement');
   const dateMin    = searchParams.get('dateMin');
+  const dateMax    = searchParams.get('dateMax');
   const nombre     = searchParams.get('nombre');
   const debut      = searchParams.get('debut');
 
@@ -35,8 +36,12 @@ export async function GET(request: NextRequest) {
   }
 
   let q = `periode(activitePrincipaleEtablissement:${naf} AND etatAdministratifEtablissement:A) AND codePostalEtablissement:${departement}*`;
-  if (dateMin) {
+  if (dateMin && dateMax) {
+    q += ` AND dateCreationEtablissement:[${dateMin} TO ${dateMax}]`;
+  } else if (dateMin) {
     q += ` AND dateCreationEtablissement:[${dateMin} TO *]`;
+  } else if (dateMax) {
+    q += ` AND dateCreationEtablissement:[* TO ${dateMax}]`;
   }
 
   const params = new URLSearchParams({ q, tri: 'dateCreationEtablissement desc' });
