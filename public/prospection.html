@@ -805,7 +805,7 @@ const STAFF_LABELS = {
    ÉTAT
 ═══════════════════════════════════════════════════════ */
 let state = {
-  activeSector: null,
+  activeSectors: new Set(),
   results: [],
   total: 0,
   debut: 0,
@@ -827,64 +827,86 @@ function initSidebar() {
       <span class="s-label">${s.label}</span>
       <span class="s-naf">${s.naf}</span>
     `;
-    btn.addEventListener('click', () => selectSector(s));
+    btn.addEventListener('click', () => toggleSector(s));
     container.appendChild(btn);
   });
 }
 
-function selectSector(sector) {
-  state.activeSector = sector;
+function toggleSector(sector) {
+  if (state.activeSectors.has(sector.id)) {
+    state.activeSectors.delete(sector.id);
+  } else {
+    state.activeSectors.add(sector.id);
+  }
   document.querySelectorAll('.sector-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.id === sector.id)
+    b.classList.toggle('active', state.activeSectors.has(b.dataset.id))
   );
-  document.getElementById('btnSearch').disabled = false;
-  search(0);
+  const empty = state.activeSectors.size === 0;
+  document.getElementById('btnSearch').disabled = empty;
+  if (!empty) search(0);
 }
 
 /* ═══════════════════════════════════════════════════════
    REQUÊTE
 ═══════════════════════════════════════════════════════ */
 async function search(debut = 0) {
-  if (!state.activeSector) return;
+  if (!state.activeSectors.size) return;
 
   const dept    = document.getElementById('filterDept').value.trim() || '34';
   const dateMin = document.getElementById('filterDate').value;
   const dateMax = document.getElementById('filterDateMax').value;
   const nombre  = parseInt(document.getElementById('filterNombre').value, 10);
+  const isMulti = state.activeSectors.size > 1;
 
-  state.debut = debut;
+  state.debut = isMulti ? 0 : debut;
 
   showLoading();
+
+  const sectors = SECTORS.filter(s => state.activeSectors.has(s.id));
   const dateRange = dateMin && dateMax ? `[${dateMin} TO ${dateMax}]`
                   : dateMin ? `[${dateMin} TO *]`
                   : dateMax ? `[* TO ${dateMax}]`
                   : null;
-  const previewQ = `activitePrincipaleEtablissement:${state.activeSector.naf} AND etatAdministratifEtablissement:A AND codePostalEtablissement:${dept}*${dateRange ? ` AND dateCreationEtablissement:${dateRange}` : ''}`;
-  document.getElementById('queryText').textContent = previewQ;
+  document.getElementById('queryText').textContent =
+    sectors.map(s => `naf:${s.naf} dept:${dept}${dateRange ? ` date:${dateRange}` : ''}`).join(' | ');
   document.getElementById('queryHint').style.display = 'block';
 
   try {
-    const params = new URLSearchParams({
-      naf:         state.activeSector.naf,
-      departement: dept,
-      nombre:      String(nombre),
-      debut:       String(debut),
-    });
-    if (dateMin) params.set('dateMin', dateMin);
-    if (dateMax) params.set('dateMax', dateMax);
+    const responses = await Promise.all(sectors.map(sector => {
+      const params = new URLSearchParams({
+        naf:         sector.naf,
+        departement: dept,
+        nombre:      String(nombre),
+        debut:       String(isMulti ? 0 : debut),
+      });
+      if (dateMin) params.set('dateMin', dateMin);
+      if (dateMax) params.set('dateMax', dateMax);
+      return fetch(`/api/sirene?${params}`)
+        .then(r => r.json().then(data => ({ ok: r.ok, status: r.status, data })));
+    }));
 
-    const res = await fetch(`/api/sirene?${params}`);
-    const data = await res.json();
-
-    if (!res.ok) {
-      const msg = data?.fault?.faultstring || data?.error || data?.message || `Erreur HTTP ${res.status}`;
-      throw new Error(msg);
+    for (const { ok, status, data } of responses) {
+      if (!ok) {
+        const msg = data?.fault?.faultstring || data?.error || data?.message || `Erreur HTTP ${status}`;
+        throw new Error(msg);
+      }
     }
 
-    state.results = data.etablissements || [];
-    state.total   = data.header?.total  ?? 0;
+    const seen = new Set();
+    const merged = [];
+    for (const { data } of responses) {
+      for (const etab of (data.etablissements || [])) {
+        if (etab.siret && !seen.has(etab.siret)) {
+          seen.add(etab.siret);
+          merged.push(etab);
+        }
+      }
+    }
 
-    renderResults(dept, nombre);
+    state.results = merged;
+    state.total   = isMulti ? merged.length : (responses[0].data.header?.total ?? 0);
+
+    renderResults(dept, nombre, isMulti);
 
   } catch (err) {
     showError(err.message);
@@ -947,19 +969,28 @@ function esc(str) {
     .replace(/>/g, '&gt;');
 }
 
-function renderResults(dept, nombre) {
+function renderResults(dept, nombre, isMulti = false) {
   const { results, total, debut } = state;
 
   hideStates();
 
   document.getElementById('resultsHeader').style.display = 'flex';
-  document.getElementById('sectorTitle').textContent = state.activeSector.label;
 
-  const page    = Math.floor(debut / nombre) + 1;
+  const sectors = SECTORS.filter(s => state.activeSectors.has(s.id));
+  document.getElementById('sectorTitle').textContent =
+    sectors.map(s => `${s.icon} ${s.label}`).join(' · ');
+
   const showing = results.length;
-  document.getElementById('resultsSub').innerHTML =
-    `<span class="count">${total.toLocaleString('fr-FR')}</span> établissements · ` +
-    `Dept. ${dept.padStart(2,'0')} · Affichage ${debut+1}–${debut+showing} · Page ${page}`;
+  if (isMulti) {
+    document.getElementById('resultsSub').innerHTML =
+      `<span class="count">${showing}</span> établissements fusionnés · ` +
+      `Dept. ${dept.padStart(2,'0')} · ${sectors.length} secteurs`;
+  } else {
+    const page = Math.floor(debut / nombre) + 1;
+    document.getElementById('resultsSub').innerHTML =
+      `<span class="count">${total.toLocaleString('fr-FR')}</span> établissements · ` +
+      `Dept. ${dept.padStart(2,'0')} · Affichage ${debut+1}–${debut+showing} · Page ${page}`;
+  }
 
   document.getElementById('btnExport').disabled = results.length === 0;
 
@@ -1015,7 +1046,11 @@ function renderResults(dept, nombre) {
   });
 
   grid.appendChild(fragment);
-  renderPagination(total, debut, nombre);
+  if (isMulti) {
+    document.getElementById('pagination').style.display = 'none';
+  } else {
+    renderPagination(total, debut, nombre);
+  }
 }
 
 function renderPagination(total, debut, nombre) {
@@ -1106,7 +1141,7 @@ function exportCSV() {
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
   a.href     = url;
-  a.download = `prospection_${state.activeSector.id}_dept${dept}.csv`;
+  a.download = `prospection_${[...state.activeSectors].join('-')}_dept${dept}.csv`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -1170,7 +1205,7 @@ initSidebar();
 // Allow Enter key on filter inputs
 document.querySelectorAll('.filter-input').forEach(el => {
   el.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && state.activeSector) search(0);
+    if (e.key === 'Enter' && state.activeSectors.size) search(0);
   });
 });
 </script>
