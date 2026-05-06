@@ -77,6 +77,9 @@ export default function Portfolio() {
                     className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     {...(i > 0 ? { loading: 'lazy' } : { priority: true })}
                   />
+                  <span className="absolute left-2 top-2 rounded bg-[#0A192F]/75 px-2 py-0.5 font-mono text-[10px] text-[#8892B0] backdrop-blur-sm">
+                    Démonstration
+                  </span>
                 </div>
 
                 <div className="flex flex-1 flex-col p-5">
