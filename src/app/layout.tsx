@@ -14,19 +14,26 @@ const description =
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "Nicolas Claverol",
-  jobTitle: "Développeur web freelance",
+  "@type": "LocalBusiness",
+  name: "Nicolas Claverol Développeur Web Freelance",
   url: "https://www.nicolasclaverol.com",
   email: "contact@nicolasclaverol.com",
-  description,
-  priceRange: "900€ - 1800€",
-  areaServed: "Montpellier et alentours",
+  description:
+    "Création de sites web pour artisans et indépendants à Montpellier. Sites vitrines, e-commerce et assistant automatique IA.",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Montpellier",
-    postalCode: "34000",
+    addressRegion: "Hérault",
     addressCountry: "FR",
+  },
+  areaServed: {
+    "@type": "GeoCircle",
+    geoMidpoint: {
+      "@type": "GeoCoordinates",
+      latitude: 43.6119,
+      longitude: 3.8772,
+    },
+    geoRadius: "30000",
   },
 };
 
