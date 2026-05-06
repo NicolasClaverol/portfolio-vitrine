@@ -34,11 +34,11 @@ export default function About() {
               À propos
             </h2>
             <p className="text-base leading-relaxed text-[#8892B0]">
-              Développeur full-stack avec plus de 20 ans d&apos;expérience en expertise et ingénierie technique dans l&apos;industrie, je me
-              suis tourné vers le développement web pour mettre mes compétences au service des
-              entrepreneurs locaux. Basé à Montpellier, j&apos;accompagne artisans, commerçants
-              et professions libérales dans la création de leur présence en ligne : des sites
-              fiables, bien construits, sans superflu.
+              Après 20 ans à résoudre des problèmes techniques complexes dans l&apos;industrie,
+              je mets aujourd&apos;hui ce savoir-faire au service des artisans et indépendants
+              qui veulent simplement un site qui fonctionne — solide, clair, sans jargon.
+              Basé à Montpellier, j&apos;accompagne commerçants, artisans et professions
+              libérales dans la création de leur présence en ligne.
             </p>
           </Reveal>
 
