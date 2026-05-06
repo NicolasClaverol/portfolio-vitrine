@@ -8,7 +8,7 @@ export default function Hero() {
       </p>
 
       {/* 2. h1 */}
-      <h1 className="hero-item hero-d2 mb-4 max-w-2xl text-4xl font-semibold leading-tight tracking-tight text-[#CCD6F6] sm:text-5xl lg:text-6xl">
+      <h1 className="hero-lcp hero-d2 mb-4 max-w-2xl text-4xl font-semibold leading-tight tracking-tight text-[#CCD6F6] sm:text-5xl lg:text-6xl">
         Votre présence en ligne,
       </h1>
 
