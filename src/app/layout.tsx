@@ -40,6 +40,9 @@ const jsonLd = {
 export const metadata: Metadata = {
   title: "Nicolas Claverol — Développeur web freelance Montpellier",
   description,
+  alternates: {
+    canonical: "https://www.nicolasclaverol.com",
+  },
   openGraph: {
     title: "Nicolas Claverol — Développeur web freelance Montpellier",
     description,
