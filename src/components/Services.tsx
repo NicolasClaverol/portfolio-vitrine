@@ -7,6 +7,7 @@ const services = [
     description: 'Site de présentation soigné, design sur mesure, visible sur Google.',
     price: 'À partir de 900 €',
     featured: false,
+    link: '/services/creation-site-vitrine-montpellier',
   },
   {
     icon: '✏️',
@@ -73,6 +74,11 @@ export default function Services() {
                 <h3 className="mb-2 text-base font-semibold text-[#CCD6F6]">{s.title}</h3>
                 <p className="mb-6 flex-1 text-sm leading-relaxed text-[#8892B0]">{s.description}</p>
                 <span className="font-mono text-sm text-[#64FFDA]">{s.price}</span>
+                {s.link && (
+                  <a href={s.link} className="mt-3 font-mono text-sm text-[#64FFDA] hover:underline">
+                    En savoir plus →
+                  </a>
+                )}
               </div>
             </Reveal>
           ))}
