@@ -140,7 +140,7 @@ export default function CreationSiteVitrineArtisanMontpellier() {
           <Reveal delay={300}>
             <div className="flex flex-col gap-4 sm:flex-row">
               <a
-                href="mailto:contact@nicolasclaverol.com"
+                href="/#contact"
                 className="rounded border border-[#64FFDA] px-7 py-3.5 text-sm font-medium text-[#64FFDA] transition-all duration-150 hover:bg-[#64FFDA]/10"
               >
                 Demander un devis gratuit
@@ -248,7 +248,7 @@ export default function CreationSiteVitrineArtisanMontpellier() {
                   </div>
                   <div className="shrink-0">
                     <a
-                      href="mailto:contact@nicolasclaverol.com"
+                      href="/#contact"
                       className="inline-block rounded border border-[#64FFDA] px-7 py-3.5 text-sm font-medium text-[#64FFDA] transition-all duration-150 hover:bg-[#64FFDA]/10"
                     >
                       Obtenir mon devis gratuit
@@ -294,7 +294,7 @@ export default function CreationSiteVitrineArtisanMontpellier() {
                 Décrivez-moi votre activité et vos besoins. Je vous réponds sous 24h avec un devis clair.
               </p>
               <a
-                href="mailto:contact@nicolasclaverol.com"
+                href="/#contact"
                 className="inline-block rounded border border-[#64FFDA] px-8 py-4 text-sm font-medium text-[#64FFDA] transition-all duration-150 hover:bg-[#64FFDA]/10"
               >
                 Envoyer un message

@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-oswald);
+}
+
+@theme {
+  --color-mjo-red: #CC0000;
+  --color-mjo-gold: #D4AF37;
+  --color-mjo-black: #0A0A0A;
+  --color-mjo-gray: #F5F5F5;
+}
+
+body {
+  background: #ffffff;
+  color: #0A0A0A;
+}
