@@ -69,12 +69,12 @@ const includes = [
   {
     icon: '📱',
     title: 'Mobile-first & rapide',
-    description: 'Conçu d\'abord pour smartphone, score Google PageSpeed > 90 sur mobile comme bureau.',
+    description: 'Votre site s\'affiche parfaitement sur téléphone, tablette et ordinateur — et se charge en moins de 2 secondes pour ne pas faire fuir vos visiteurs.',
   },
   {
     icon: '🔍',
     title: 'Optimisé pour Google',
-    description: 'Balises SEO, schema.org, Google Search Console configuré — votre site indexé dès la mise en ligne.',
+    description: 'Votre site est réglé pour apparaître sur Google quand un client cherche votre métier près de chez vous — dès la mise en ligne.',
   },
   {
     icon: '✉️',
@@ -198,8 +198,9 @@ export default function CreationSiteVitrineArtisanMontpellier() {
                 sur Google par ses futurs clients.
               </p>
               <p className="max-w-2xl text-base leading-relaxed text-[#8892B0]">
-                J&apos;interviens principalement sur <strong className="text-[#CCD6F6]">Montpellier et l&apos;Hérault</strong> — Béziers,
-                Sète, Lunel, Mauguio, Castelnau-le-Lez, Palavas-les-Flots — et à distance partout en France.
+                J&apos;interviens sur <strong className="text-[#CCD6F6]">Montpellier et ses alentours</strong> — Castelnau-le-Lez,
+                Jacou, Saint-Gély-du-Fesc, Saint-Clément-de-Rivière, Saint-Jean-de-Védas, Lattes, Mauguio,
+                Palavas-les-Flots — et à distance partout en France.
               </p>
             </Reveal>
           </div>
