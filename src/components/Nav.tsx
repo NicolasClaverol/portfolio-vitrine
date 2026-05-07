@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react'
 
 const links = [
-  { label: 'Services', href: '#services' },
-  { label: 'Portfolio', href: '#portfolio' },
-  { label: 'À propos', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Portfolio', href: '/#portfolio' },
+  { label: 'À propos', href: '/#about' },
+  { label: 'Contact', href: '/#contact' },
 ]
 
 export default function Nav() {
@@ -28,7 +28,7 @@ export default function Nav() {
       }`}
     >
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <a href="#" className="text-sm font-semibold tracking-tight text-[#CCD6F6]">
+        <a href="/" className="text-sm font-semibold tracking-tight text-[#CCD6F6]">
           Nicolas Claverol
         </a>
 
@@ -47,7 +47,7 @@ export default function Nav() {
           ))}
           <li>
             <a
-              href="#contact"
+              href="/#contact"
               className="rounded border border-[#64FFDA] px-4 py-2 text-sm font-medium text-[#64FFDA] transition-all duration-150 hover:bg-[#64FFDA]/10"
             >
               Me contacter
@@ -97,7 +97,7 @@ export default function Nav() {
             ))}
             <li>
               <a
-                href="#contact"
+                href="/#contact"
                 onClick={() => setMenuOpen(false)}
                 className="inline-block rounded border border-[#64FFDA] px-4 py-2 text-sm font-medium text-[#64FFDA]"
               >
