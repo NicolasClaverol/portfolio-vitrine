@@ -94,7 +94,7 @@ export default function Contact() {
                     required
                     value={form.name}
                     onChange={handleChange}
-                    placeholder="Marie Dupont"
+
                     className={inputClass}
                   />
                 </div>
@@ -110,7 +110,7 @@ export default function Contact() {
                     required
                     value={form.email}
                     onChange={handleChange}
-                    placeholder="marie@exemple.fr"
+
                     className={inputClass}
                   />
                 </div>
@@ -125,7 +125,7 @@ export default function Contact() {
                     type="tel"
                     value={form.phone}
                     onChange={handleChange}
-                    placeholder="06 12 34 56 78"
+
                     className={inputClass}
                   />
                 </div>
@@ -141,7 +141,7 @@ export default function Contact() {
                     rows={5}
                     value={form.message}
                     onChange={handleChange}
-                    placeholder="Décrivez votre projet..."
+
                     className={`${inputClass} resize-none`}
                   />
                 </div>
