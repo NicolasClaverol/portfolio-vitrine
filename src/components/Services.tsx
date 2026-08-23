@@ -24,6 +24,7 @@ const services = [
       'Site multi-pages professionnel + assistant IA qui répond à vos clients 24h/24, 7j/7. Récap des conversations reçu par email. 1ère année d\'assistant offerte.',
     price: 'À partir de 1 300 €',
     featured: true,
+    link: '/services/assistant-ia-site-internet-montpellier',
   },
   {
     icon: '🛒',
@@ -94,6 +95,11 @@ export default function Services() {
             <div className="flex-1">
               <h3 className="mb-2 text-base font-semibold text-[#CCD6F6]">{services[2].title}</h3>
               <p className="text-sm leading-relaxed text-[#8892B0]">{services[2].description}</p>
+              {services[2].link && (
+                <a href={services[2].link} className="mt-3 inline-block font-mono text-sm text-[#64FFDA] hover:underline">
+                  En savoir plus →
+                </a>
+              )}
             </div>
             <span className="mt-4 font-mono text-sm text-[#64FFDA] sm:mt-0 sm:shrink-0">{services[2].price}</span>
           </div>
