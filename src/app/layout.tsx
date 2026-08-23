@@ -18,8 +18,30 @@ const jsonLd = {
   name: "Nicolas Claverol Développeur Web Freelance",
   url: "https://www.nicolasclaverol.com",
   email: "contact@nicolasclaverol.com",
+  telephone: "+33650030776",
   description:
     "Création de sites web pour artisans et indépendants à Montpellier. Sites vitrines, e-commerce et assistant automatique IA.",
+  founder: {
+    "@type": "Person",
+    name: "Nicolas Claverol",
+    jobTitle: "Développeur web freelance",
+  },
+  employee: {
+    "@type": "Person",
+    name: "Nicolas Claverol",
+    jobTitle: "Développeur web freelance",
+  },
+  knowsAbout: [
+    "Création de site internet",
+    "Site vitrine",
+    "Site e-commerce",
+    "Référencement SEO local",
+    "Assistant IA pour site web",
+    "Refonte de site internet",
+    "Next.js",
+    "React",
+  ],
+  priceRange: "€€",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Montpellier",
@@ -35,6 +57,56 @@ const jsonLd = {
     },
     geoRadius: "30000",
   },
+  makesOffer: [
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "Création de site vitrine",
+        url: "https://www.nicolasclaverol.com/services/creation-site-vitrine-montpellier",
+      },
+    },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "Site Pro avec gestion autonome",
+        url: "https://www.nicolasclaverol.com/services/site-gestion-autonome-montpellier",
+      },
+    },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "Site Pro avec assistant IA",
+        url: "https://www.nicolasclaverol.com/services/assistant-ia-site-internet-montpellier",
+      },
+    },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "Assistant IA sur site existant",
+        url: "https://www.nicolasclaverol.com/services/assistant-ia-site-existant-montpellier",
+      },
+    },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "Création de site e-commerce",
+        url: "https://www.nicolasclaverol.com/services/creation-site-ecommerce-montpellier",
+      },
+    },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "Refonte de site internet",
+        url: "https://www.nicolasclaverol.com/services/refonte-site-internet-montpellier",
+      },
+    },
+  ],
 };
 
 export const metadata: Metadata = {
