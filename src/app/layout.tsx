@@ -19,6 +19,7 @@ const jsonLd = {
   url: "https://www.nicolasclaverol.com",
   email: "contact@nicolasclaverol.com",
   telephone: "+33650030776",
+  image: "https://www.nicolasclaverol.com/og-image.jpg",
   description:
     "Création de sites web pour artisans et indépendants à Montpellier. Sites vitrines, e-commerce et assistant automatique IA.",
   founder: {
@@ -45,6 +46,7 @@ const jsonLd = {
   address: {
     "@type": "PostalAddress",
     addressLocality: "Montpellier",
+    postalCode: "34000",
     addressRegion: "Hérault",
     addressCountry: "FR",
   },
