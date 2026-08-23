@@ -18,6 +18,14 @@ export const metadata: Metadata = {
     siteName: 'Nicolas Claverol',
     locale: 'fr_FR',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.jpg',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
   },
 }
 
