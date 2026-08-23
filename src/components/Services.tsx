@@ -49,6 +49,7 @@ const services = [
     description: "Modernisation d'un site existant, mises à jour, support technique.",
     price: 'Sur devis',
     featured: false,
+    link: '/services/refonte-site-internet-montpellier',
   },
 ]
 
@@ -133,6 +134,11 @@ export default function Services() {
               <div className="flex-1">
                 <h3 className="mb-2 text-base font-semibold text-[#CCD6F6]">{services[5].title}</h3>
                 <p className="text-sm leading-relaxed text-[#8892B0]">{services[5].description}</p>
+                {services[5].link && (
+                  <a href={services[5].link} className="mt-3 inline-block font-mono text-sm text-[#64FFDA] hover:underline">
+                    En savoir plus →
+                  </a>
+                )}
               </div>
               <span className="mt-4 font-mono text-sm text-[#64FFDA] sm:mt-0 sm:shrink-0">{services[5].price}</span>
             </div>
