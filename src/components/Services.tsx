@@ -43,6 +43,7 @@ const services = [
       'Ajoutez un assistant automatique à votre site existant. Installation rapide, aucune refonte nécessaire. Première année sans abonnement.',
     price: 'À partir de 800 €',
     featured: false,
+    link: '/services/assistant-ia-site-existant-montpellier',
   },
   {
     icon: '🔧',
