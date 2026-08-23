@@ -16,6 +16,7 @@ const services = [
       'Modifiez vos textes, photos, menus ou œuvres vous-même, sans technicien. Interface simple et intuitive.',
     price: 'À partir de 1 200 €',
     featured: false,
+    link: '/services/site-gestion-autonome-montpellier',
   },
   {
     icon: '🤖',
