@@ -139,7 +139,7 @@ export default function CreationSiteEcommerceMontpellier() {
           </Reveal>
           <Reveal delay={100}>
             <h1 className="mb-6 max-w-3xl text-4xl font-semibold leading-tight tracking-tight text-[#CCD6F6] sm:text-5xl lg:text-6xl">
-              Création de site e-commerce à Montpellier
+              Création de site <span className="whitespace-nowrap">e-commerce</span> à Montpellier
             </h1>
           </Reveal>
           <Reveal delay={200}>
