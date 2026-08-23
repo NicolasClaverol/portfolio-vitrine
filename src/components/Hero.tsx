@@ -9,12 +9,12 @@ export default function Hero() {
 
       {/* 2. h1 */}
       <h1 className="hero-lcp hero-d2 mb-4 max-w-2xl text-4xl font-semibold leading-tight tracking-tight text-[#CCD6F6] sm:text-5xl lg:text-6xl">
-        Votre présence en ligne,
+        Développeur web freelance à Montpellier
       </h1>
 
-      {/* 3. h2 */}
+      {/* 3. sous-titre */}
       <h2 className="hero-item hero-d3 mb-6 max-w-2xl text-4xl font-semibold leading-tight tracking-tight text-[#8892B0] sm:text-5xl lg:text-6xl">
-        pensée pour durer.
+        Votre présence en ligne, pensée pour durer.
       </h2>
 
       {/* 4. Paragraphe */}
