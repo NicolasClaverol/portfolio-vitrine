@@ -140,7 +140,7 @@ export default function SiteGestionAutonomeMontpellier() {
           </Reveal>
           <Reveal delay={100}>
             <h1 className="mb-6 max-w-3xl text-4xl font-semibold leading-tight tracking-tight text-[#CCD6F6] sm:text-5xl lg:text-6xl">
-              Site internet à gérer vous-même à Montpellier
+              Site internet à gérer <span className="whitespace-nowrap">vous-même</span> à Montpellier
             </h1>
           </Reveal>
           <Reveal delay={200}>
