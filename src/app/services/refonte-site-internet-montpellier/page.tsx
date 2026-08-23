@@ -94,7 +94,7 @@ const includes = [
 const faqs = [
   {
     q: 'Faut-il tout refaire, ou peut-on garder une partie ?',
-    a: "Ça dépend de l'état de votre site. Parfois une refonte partielle suffit, parfois mieux vaut repartir sur des bases saines. On évalue ensemble avant de décider.",
+    a: "Cela dépend de l'état de votre site. Parfois une refonte partielle suffit, parfois mieux vaut repartir sur des bases saines. On évalue ensemble avant de décider.",
   },
   {
     q: 'Vais-je perdre mon référencement Google actuel ?',
@@ -102,11 +102,11 @@ const faqs = [
   },
   {
     q: 'Combien coûte une refonte ?',
-    a: "C'est sur devis, car le prix dépend de l'ampleur du travail. Après avoir regardé votre site actuel, je vous envoie un devis clair et détaillé.",
+    a: "Sur devis, car le prix dépend de l'ampleur du travail. Après avoir regardé votre site actuel, je vous envoie un devis clair et détaillé.",
   },
   {
     q: 'Proposez-vous un suivi après la refonte ?',
-    a: "Oui, en option : mises à jour, petites corrections et support technique, selon vos besoins. On en discute au moment du devis.",
+    a: "Oui, en option : mises à jour, petites corrections et support technique, selon vos besoins. Nous en discutons au moment du devis.",
   },
 ]
 
