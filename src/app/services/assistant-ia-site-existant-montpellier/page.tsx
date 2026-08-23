@@ -108,7 +108,7 @@ const faqs = [
   },
   {
     q: "Ça marche avec n'importe quel site ?",
-    a: "Dans la grande majorité des cas, oui. On vérifie ensemble la compatibilité avec votre site actuel avant de démarrer, sans engagement.",
+    a: "Dans la grande majorité des cas, oui. Nous vérifions ensemble la compatibilité avec votre site actuel avant de démarrer, sans engagement.",
   },
   {
     q: "Que se passe-t-il après la première année ?",
